@@ -1,0 +1,73 @@
+const {  getAuthors,
+        createAuthor,
+        deleteAuthor,
+        updateAuthor}=require('../models/authorsModel')
+
+const getAuthor=async (req,res)=>{
+    
+    try {
+        const data= await getAuthors(body.email)
+        if (data.ok) res.status(200).json(data)
+     
+    } catch (error) {
+        res.status(500).json({
+            ok:false,
+            msg:'error al obtener el autor'
+        })
+    }
+  
+}
+
+
+
+const createAuthors=async(req,res)=>{
+
+        const {title, content, category, email} = req.body
+
+    try {
+        await createAuthor(title, content, category, email);
+        res.status(200).json({
+            ok:true,
+            mgs: 'autor creada'
+        })
+    } catch(error){
+        res.status(500).json({
+            ok:false,
+            msg:'error al crear el autor'
+        })
+
+    }
+}
+
+const deleteAuthors=async(req,res)=>{
+
+    try {
+       const response = await deleteAuthor(params.id);
+       if (response.ok) res.status(200).json(response)
+       
+      } catch (error) {
+        res.status(500).json({
+          ok: false,
+          msg: 'Error al eliminar la entrada',
+        });
+      }
+}
+const updateAuthors=async({body, params}, res)=>{
+
+    try {
+        const response = await updateAuthor(body, params.id)
+        if (response.ok) res.status(200).json(response)
+    
+      } catch (error) {
+        res.status(500).json({
+          ok: false,
+          msg: 'Error al actualizar la entrada',
+        });
+      }
+}
+module.exports={
+    getAuthor,
+    createAuthors,
+    deleteAuthors,
+    updateAuthors
+}
